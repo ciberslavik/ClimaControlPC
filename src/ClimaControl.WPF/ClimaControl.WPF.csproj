@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Installers\" />
+    <ProjectReference Include="..\ClimaControl.Shell.Impl\ClimaControl.Shell.Impl.csproj" />
+    <ProjectReference Include="..\ClimaControl.Shell\ClimaControl.Shell.csproj" />
   </ItemGroup>
 
 </Project>
