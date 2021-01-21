@@ -15,4 +15,8 @@
     <ProjectReference Include="..\ClimaControl.Shell\ClimaControl.Shell.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Windsor\" />
+  </ItemGroup>
+
 </Project>
