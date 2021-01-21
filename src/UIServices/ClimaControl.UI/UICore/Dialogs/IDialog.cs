@@ -5,5 +5,6 @@
         bool? ShowDialog();
         string Title { get; set; }
         DialogResult Result { get; }
+        
     }
 }

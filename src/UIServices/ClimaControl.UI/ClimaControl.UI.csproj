@@ -5,13 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Compile Remove="Dialogs\**" />
+    <EmbeddedResource Remove="Dialogs\**" />
+    <None Remove="Dialogs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="UICore\MVVM\" />
-    <Folder Include="Dialogs\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\ClimaControl.Data\ClimaControl.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UICore\Dialogs\Models\Security\IEditGroupRulesDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\Dialogs\ViewModels\Security\IEditGroupRulesDialogViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\Dialogs\Views\Security\IEditGroupRulesDialogView.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

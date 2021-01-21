@@ -7,17 +7,15 @@ namespace ClimaControl.UI.Impl.UICore.Dialogs
 {
     public class MessageDialog:DialogBase, IMessageDialog
     {
-        private readonly IMessageDialogView _view;
-        private readonly IMessageDialogViewModel _vm;
         private string _title;
         private DialogResult _result;
         private string _message;
         private DialogButton _buttons;
+        private readonly IMessageDialogViewModel _vm;
 
-        public MessageDialog(IMessageDialogView view, IMessageDialogViewModel vm):base(view, vm)
+        public MessageDialog(IMessageDialogView view,IMessageDialogViewModel vm):base(view,vm)
         {
-            _view = view;
-            _vm = view.DataContext as IMessageDialogViewModel;
+            _vm = vm;
         }
 
 

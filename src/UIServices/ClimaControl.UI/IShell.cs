@@ -9,5 +9,8 @@ namespace ClimaControl.UI
         IMainView MainView { get; }
 
         T CreateDialog<T>();
+
+        bool Login();
+        bool IsLogin { get; }
     }
 }

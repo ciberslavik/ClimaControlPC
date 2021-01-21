@@ -1,0 +1,28 @@
+﻿<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>ClimaShellDialogTemplate.xaml</DefaultName>
+    <Name>ClimaShellDialogTemplate</Name>
+    <Description>&lt;Нет описания&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>ClimaControl.UI</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>ClimaControl.Data</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="Designer" TargetFileName="$fileinputname$DialogView.xaml" ReplaceParameters="true">DefaultDialogView.xaml</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$DialogView.xaml.cs" ReplaceParameters="true">DefaultDialogView.xaml.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="I$fileinputname$DialogView.cs" ReplaceParameters="true">IDefaultDialogView.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="I$fileinputname$DialogViewModel.cs" ReplaceParameters="true">IDefaultDialogViewModel.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$DialogViewModel.cs" ReplaceParameters="true">DefaultDialogViewModel.cs</ProjectItem>
+
+    <ProjectItem SubType="Code" TargetFileName="I$fileinputname$Dialog.cs" ReplaceParameters="true">IDefaultDialog.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$Dialog.cs" ReplaceParameters="true">DefaultDialog.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ClimaControl.Data\ClimaControl.Data.csproj" />
+    <ProjectReference Include="..\..\SecurityServices\ClimaControl.Security\ClimaControl.Security.csproj" />
+  </ItemGroup>
+
+</Project>

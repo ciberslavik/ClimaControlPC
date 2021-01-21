@@ -2,9 +2,8 @@
 
 namespace ClimaControl.UI.UICore.Dialogs.ViewModels
 {
-    public interface IMessageDialogViewModel:IViewModel
+    public interface IMessageDialogViewModel:IDialogViewModel
     {
-        string Title { get; set; }
         string Message { get; set; }
     }
 }

@@ -5,11 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Repositories\ClimaControl.Security.Repository\ClimaControl.Security.Repository.Debug.csproj" />
+    <ProjectReference Include="..\..\SecurityServices\ClimaControl.Security\ClimaControl.Security.csproj" />
     <ProjectReference Include="..\ClimaControl.UI\ClimaControl.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UICore\Dialogs\Security\EditGroupRulesDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

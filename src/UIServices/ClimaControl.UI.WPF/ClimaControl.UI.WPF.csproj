@@ -11,6 +11,19 @@
 
   <ItemGroup>
     <Folder Include="DebugVM\" />
+    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Dialogs\Security\EditGroupRulesDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Dialogs\Security\EditGroupRulesDialogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

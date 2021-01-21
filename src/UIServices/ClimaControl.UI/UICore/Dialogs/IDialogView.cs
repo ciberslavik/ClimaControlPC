@@ -4,5 +4,7 @@
     {
         bool? ShowDialog();
         object DataContext { get; set; }
+        void Close();
+        bool? DialogResult { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using ClimaControl.UI.Impl.Windsor;
 using ClimaControl.UI.UICore.Dialogs;
+using ClimaControl.UI.UICore.Themes;
 using ClimaControl.UI.UICore.ViewModels;
 using ClimaControl.UI.UICore.Views;
 using ClimaControl.UI.Util;
@@ -38,22 +39,42 @@ namespace ClimaControl.UI.Impl.Core.Installers
                     .BasedOn<IView>()
                     .WithServiceFromInterface()
                     .LifestyleTransient(),
+
                 Classes.FromAssemblyInDirectory(asmFilter)
                     .BasedOn<IMainView>()
                     .WithServiceFromInterface()
                     .LifestyleSingleton(),
+
                 Classes.FromAssemblyInDirectory(asmFilter)
                     .BasedOn<IViewModel>()
                     .WithServiceFromInterface()
                     .LifestyleTransient(),
+
+                Classes.FromAssemblyInDirectory(asmFilter)
+                    .BasedOn<IDialogViewModel>()
+                    .WithServiceFromInterface()
+                    .LifestyleTransient(),
+
                 Classes.FromAssemblyInDirectory(asmFilter)
                     .BasedOn<IDialog>()
                     .WithServiceFromInterface()
                     .LifestyleTransient(),
+
                 Classes.FromAssemblyInDirectory(asmFilter)
                     .BasedOn<IDialogView>()
                     .WithServiceFromInterface()
                     .LifestyleTransient());
+
+            container.Register(
+                Classes.FromAssemblyInDirectory(asmFilter)
+                    .BasedOn<IThemeService>()
+                    .WithServiceFromInterface()
+                    .LifestyleSingleton(),
+
+                Classes.FromAssemblyInDirectory(asmFilter)
+                    .BasedOn<Theme>()
+                    .WithServiceBase()
+                    .LifestyleSingleton());
 
         }
     }
