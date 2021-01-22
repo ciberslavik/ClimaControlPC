@@ -12,7 +12,7 @@ namespace ClimaControl.UI.WPF.Themes
         {
             _themes = themes;
         }
-        public IEnumerable<Theme> InstalledThemes { get; }
+        public IEnumerable<Theme> InstalledThemes { get=>_themes; }
         public void LoadTheme(Theme theme)
         {
             var themeDict = Application.LoadComponent(theme.GetResourceUri()) as ResourceDictionary;

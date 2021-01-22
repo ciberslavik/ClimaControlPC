@@ -16,6 +16,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.UI.Impl", "src\UIServices\ClimaControl.UI.Impl\ClimaControl.UI.Impl.csproj", "{33047813-41C4-4DFA-A641-629F6900980F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaLauncher", "ClimaLauncher\ClimaLauncher.csproj", "{1DB6BC6B-6439-43D1-A9F2-A57957750AB6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70189FCB-F71B-4EA3-BB8A-5A2A3CE20416} = {70189FCB-F71B-4EA3-BB8A-5A2A3CE20416}
+		{07E09FCD-4220-499D-9FF9-454EE2B45C42} = {07E09FCD-4220-499D-9FF9-454EE2B45C42}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{20EAD73E-3B6C-4746-8AF2-0BA5AD2A8D48}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,13 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SecurityServices", "SecurityServices", "{26D488D7-ECBC-4A9B-8A8C-FF18B609E163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimaControl.Security", "src\SecurityServices\ClimaControl.Security\ClimaControl.Security.csproj", "{58258629-009D-4568-B4DB-1CE968962908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.Security", "src\SecurityServices\ClimaControl.Security\ClimaControl.Security.csproj", "{58258629-009D-4568-B4DB-1CE968962908}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{494CB265-96B1-4EDB-B831-B6B78A62760D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimaControl.Security.Repository.Debug", "src\Repositories\ClimaControl.Security.Repository\ClimaControl.Security.Repository.Debug.csproj", "{C23E1F28-ECC4-4D50-8735-2488BD3F052F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.Security.Repository.Debug", "src\Repositories\ClimaControl.Security.Repository\ClimaControl.Security.Repository.Debug.csproj", "{C23E1F28-ECC4-4D50-8735-2488BD3F052F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimaControl.UI.WPF.ThemeLight", "src\UIServices\ClimaControl.UI.WPF.ThemeLight\ClimaControl.UI.WPF.ThemeLight.csproj", "{07E09FCD-4220-499D-9FF9-454EE2B45C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.UI.WPF.ThemeLight", "src\UIServices\ClimaControl.UI.WPF.ThemeLight\ClimaControl.UI.WPF.ThemeLight.csproj", "{07E09FCD-4220-499D-9FF9-454EE2B45C42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.UI.WPF.ThemeDark", "src\UIServices\ClimaControl.UI.WPF.ThemeDark\ClimaControl.UI.WPF.ThemeDark.csproj", "{70189FCB-F71B-4EA3-BB8A-5A2A3CE20416}"
 EndProject

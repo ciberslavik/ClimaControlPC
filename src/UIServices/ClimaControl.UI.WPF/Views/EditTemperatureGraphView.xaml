@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ClimaLauncher.DialogCreation.EditTemperatureGraphView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClimaLauncher.DialogCreation"
+        
+        xmlns:viewModels="clr-namespace:ClimaControl.UI.UICore.ViewModels;assembly=ClimaControl.UI"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:IEditTemperatureGraphViewModel, IsDesignTimeCreatable=False}"
+        Height="480" Width="640">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/Images.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedWindowStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedControlStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Edit temperature"></TextBlock>
+    </Grid>
+</UserControl>

@@ -23,6 +23,11 @@ namespace ClimaControl.UI.Impl.Windsor
                 if (model.CustomComponentActivator == null)
                     model.CustomComponentActivator = typeof(ViewActivator);
             }
+            if (typeof(IMainView).IsAssignableFrom(model.Implementation))
+            {
+                if (model.CustomComponentActivator == null)
+                    model.CustomComponentActivator = typeof(ViewActivator);
+            }
         }
 
         

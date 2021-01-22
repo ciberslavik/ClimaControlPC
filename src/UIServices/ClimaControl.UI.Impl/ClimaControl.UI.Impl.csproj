@@ -15,7 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UICore\Dialogs\ConfigurationDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UICore\Dialogs\Security\EditGroupRulesDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\ViewModels\Dialogs\ConfigurationDialogViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\ViewModels\EditTemperatureGraphViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

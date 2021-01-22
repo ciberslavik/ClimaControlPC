@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\UIServices\ClimaControl.UI\ClimaControl.UI.csproj" />
+    <ProjectReference Include="..\ClimaControl.UI.WPF\ClimaControl.UI.WPF.csproj" />
   </ItemGroup>
 
 </Project>

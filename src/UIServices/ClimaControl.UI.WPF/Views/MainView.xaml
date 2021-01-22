@@ -7,7 +7,18 @@
         xmlns:vm="clr-namespace:ClimaControl.UI.UICore.ViewModels;assembly=ClimaControl.UI"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:IMainViewModel, IsDesignTimeCreatable=False}"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Height="450" Width="800"
+        Icon="{DynamicResource ApplicationImage}"
+        Style="{DynamicResource VS2012WindowStyle}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/Images.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedWindowStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedControlStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,27 +26,36 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="File">
+        <Menu Grid.Row="0" Style="{DynamicResource MenuBar_Style }" IsMainMenu="True">
+            <MenuItem Header="Файл" Style="{DynamicResource MenuItem_Style}">
+                <MenuItem Header="Сохранить лог" Style="{DynamicResource MenuItem_Style}"/>
+                <Separator/>
+                <MenuItem Header="Выход" Style="{DynamicResource MenuItem_Style}"/>
+            </MenuItem>
+            <MenuItem Header="Правка" Style="{DynamicResource MenuItem_Style}">
 
             </MenuItem>
-            <MenuItem Header="Edit">
-
+            <MenuItem Header="Инструменты" Style="{DynamicResource MenuItem_Style}">
+                <MenuItem Header="Параметры"
+                          Style="{DynamicResource MenuItem_Style}"
+                          Command="{Binding OpenConfigDialogCommand}"/>
             </MenuItem>
         </Menu>
-        <ToolBarTray Grid.Row="1">
-            <ToolBar x:Name="File_ToolBar">
+        <ToolBarTray Grid.Row="1" Style="{DynamicResource ToolBarTry_Style}">
+            <ToolBar x:Name="File_ToolBar" Style="{DynamicResource ToolBar_Style}">
                 <Button Content="C"/>
                 <Button Content="S"/>
             </ToolBar>
         </ToolBarTray>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <ContentControl Grid.Column="2" Content="{Binding View}"/>
         </Grid>
+        
         <StatusBar Grid.Row="3">
             <TextBlock Text="DefaultStatus"/>
         </StatusBar>

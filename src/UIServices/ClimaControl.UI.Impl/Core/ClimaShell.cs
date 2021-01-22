@@ -1,8 +1,12 @@
-﻿using Castle.Windsor;
+﻿using System.Collections.Generic;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
 using ClimaControl.Data.Security.Exceptions;
 using ClimaControl.UI.Impl.Core.Installers;
 using ClimaControl.UI.Services;
+using ClimaControl.UI.UICore.Dialogs;
 using ClimaControl.UI.UICore.Dialogs.Models.Security;
+using ClimaControl.UI.UICore.Themes;
 using ClimaControl.UI.UICore.Views;
 
 namespace ClimaControl.UI.Impl.Core
@@ -14,6 +18,8 @@ namespace ClimaControl.UI.Impl.Core
         private IWindsorContainer _iocContainer;
 
         private bool _isLogin;
+        private IEnumerable<Theme> _shellThemes;
+
         public ClimaShell()
         {
             _iocContainer = new WindsorContainer();
@@ -21,7 +27,8 @@ namespace ClimaControl.UI.Impl.Core
             _iocContainer.Install(new GenericInstaller());
             _iocContainer.Install(new MVVMInstaller());
 
-            _mainView = _iocContainer.Resolve<IMainView>();
+            _iocContainer.Register(Component.For<IShell>().Instance(this).LifestyleSingleton());
+            _isLogin = false;
         }
 
 
@@ -35,19 +42,20 @@ namespace ClimaControl.UI.Impl.Core
         {
             get
             {
-                if (_isLogin)
+                
                     return _iocContainer.Resolve<IMainView>();
-                else
-                {
-                    throw new SecurityException("System not login before MainWindow resolve");
-                }
+                
             }
         } 
-        public T CreateDialog<T>()
+        public T CreateDialog<T>() where T:IDialog
         {
             return _iocContainer.Resolve<T>();
         }
 
+        public T CreateView<T>() where T : IView
+        {
+            return _iocContainer.Resolve<T>();
+        }
         public bool Login()
         {
             var loginDialog = _iocContainer.Resolve<ILoginDialog>();
@@ -70,5 +78,11 @@ namespace ClimaControl.UI.Impl.Core
         }
 
         public bool IsLogin { get; }
+
+        public IEnumerable<Theme> ShellThemes => _iocContainer.Resolve<IThemeService>().InstalledThemes;
+        public void SetShellTheme(Theme theme)
+        {
+            _iocContainer.Resolve<IThemeService>().LoadTheme(theme);
+        }
     }
 }

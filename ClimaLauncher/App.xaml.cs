@@ -9,6 +9,7 @@ using ClimaControl.UI;
 using ClimaControl.UI.Impl.Core;
 using ClimaControl.UI.UICore.Dialogs.Models;
 using ClimaControl.UI.UICore.Dialogs.Models.Security;
+using ClimaControl.UI.UICore.Themes;
 
 
 namespace ClimaLauncher
@@ -21,16 +22,27 @@ namespace ClimaLauncher
         protected override void OnStartup(StartupEventArgs e)
         {
             IShell shell = new ClimaShell();
-            if (shell.Login())
+            var themes = shell.ShellThemes;
+            foreach (var t in themes)
             {
-                var w = shell.MainView as Window;
+                if (t.GetType().Name.Equals("DarkTheme"))
+                {
+                    shell.SetShellTheme(t);
+                }
+            }
+            var w = shell.MainView as Window;
+            //if (shell.Login())
+            //{
+                
                 if (w != null)
                 {
                     w.Show();
+                    w.WindowState = WindowState.Maximized;
                     MainWindow = w;
                 }
-            }
+            //}
 
+            
             base.OnStartup(e);
         }
     }

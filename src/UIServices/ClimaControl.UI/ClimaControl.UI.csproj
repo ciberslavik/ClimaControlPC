@@ -19,13 +19,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UICore\Dialogs\Models\IConfigurationDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UICore\Dialogs\Models\Security\IEditGroupRulesDialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\Dialogs\ViewModels\IConfigurationDialogViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UICore\Dialogs\ViewModels\Security\IEditGroupRulesDialogViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UICore\Dialogs\Views\IConfigurationDialogView.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UICore\Dialogs\Views\Security\IEditGroupRulesDialogView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\ViewModels\IEditTemperatureGraphViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UICore\Views\IEditTemperatureGraphView.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

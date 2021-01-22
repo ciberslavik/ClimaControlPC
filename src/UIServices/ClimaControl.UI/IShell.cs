@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
+using ClimaControl.UI.UICore.Dialogs;
+using ClimaControl.UI.UICore.Themes;
 using ClimaControl.UI.UICore.Views;
 
 namespace ClimaControl.UI
@@ -8,9 +11,13 @@ namespace ClimaControl.UI
         string Title { get; set; }
         IMainView MainView { get; }
 
-        T CreateDialog<T>();
+        T CreateDialog<T>() where T:IDialog;
+        T CreateView<T>() where T : IView;
 
         bool Login();
         bool IsLogin { get; }
+
+        IEnumerable<Theme> ShellThemes { get; }
+        void SetShellTheme(Theme theme);
     }
 }

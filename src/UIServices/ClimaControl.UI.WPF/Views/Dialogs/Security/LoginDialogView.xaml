@@ -8,10 +8,18 @@
         xmlns:vm="clr-namespace:ClimaControl.UI.UICore.Dialogs.ViewModels.Security;assembly=ClimaControl.UI"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:ILoginDialogViewModel, IsDesignTimeCreatable=False}"
-        Title="{Binding Title}" Height="280" Width="400"
-        x:Name="LoginDialogWindow">
+        Title="{Binding Title}" Height="250" Width="400"
+        x:Name="LoginDialogWindow"
+        Style="{DynamicResource VS2012WindowStyle}">
     <Window.Resources>
-        <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/Images.xaml"></ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/Images.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedWindowStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ClimaControl.UI.WPF;component/Resources/CustomizedControlStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

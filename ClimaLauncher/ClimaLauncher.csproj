@@ -8,7 +8,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\UIServices\ClimaControl.UI.Impl\ClimaControl.UI.Impl.csproj" />
+    <ProjectReference Include="..\src\UIServices\ClimaControl.UI.WPF.ThemeDark\ClimaControl.UI.WPF.ThemeDark.csproj" />
+    <ProjectReference Include="..\src\UIServices\ClimaControl.UI.WPF.ThemeLight\ClimaControl.UI.WPF.ThemeLight.csproj" />
     <ProjectReference Include="..\src\UIServices\ClimaControl.UI.WPF\ClimaControl.UI.WPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DialogCreation\" />
   </ItemGroup>
 
 </Project>
