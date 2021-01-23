@@ -4,6 +4,8 @@ using Castle.Windsor;
 using ClimaControl.Data.Security.Exceptions;
 using ClimaControl.UI.Impl.Core.Installers;
 using ClimaControl.UI.Services;
+using ClimaControl.UI.Services.Configuration;
+using ClimaControl.UI.Services.Configuration.Model;
 using ClimaControl.UI.UICore.Dialogs;
 using ClimaControl.UI.UICore.Dialogs.Models.Security;
 using ClimaControl.UI.UICore.Themes;
@@ -28,6 +30,18 @@ namespace ClimaControl.UI.Impl.Core
             _iocContainer.Install(new MVVMInstaller());
 
             _iocContainer.Register(Component.For<IShell>().Instance(this).LifestyleSingleton());
+
+
+            var configService = _iocContainer.Resolve<IConfigurationService>();
+
+           //var item1 = configService.CreateConfiguration<TestConfigItem>();
+
+            //TestConfigItem item1 = new TestConfigItem("TestItem1");
+            //TestConfigItem item2 = new TestConfigItem("TestItem2");
+            //TestConfigItem item21 = new TestConfigItem("TestItem21");
+            //item2.AddChild(item21);
+
+            //configService.
             _isLogin = false;
         }
 

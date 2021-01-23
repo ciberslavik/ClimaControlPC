@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Repositories\ClimaControl.FSRepositories\ClimaControl.FSRepositories.csproj" />
     <ProjectReference Include="..\..\Repositories\ClimaControl.Security.Repository\ClimaControl.Security.Repository.Debug.csproj" />
     <ProjectReference Include="..\..\SecurityServices\ClimaControl.Security\ClimaControl.Security.csproj" />
+    <ProjectReference Include="..\..\Services\ClimaControl.NewtonsoftJsonSerializers\ClimaControl.NewtonsoftJsonSerializers.csproj" />
     <ProjectReference Include="..\ClimaControl.UI\ClimaControl.UI.csproj" />
   </ItemGroup>
 
@@ -27,6 +29,11 @@
     <Compile Update="UICore\ViewModels\EditTemperatureGraphViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Configuration\" />
+    <Folder Include="UICore\ViewModels\Configuration\" />
   </ItemGroup>
 
 </Project>

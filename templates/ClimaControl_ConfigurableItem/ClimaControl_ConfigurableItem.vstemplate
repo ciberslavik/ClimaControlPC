@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>ClimaControl_ConfigurableItem</Name>
+    <Description>ClimaControl_ConfigurableItem</Description>
+    <Icon>ClimaControl_ConfigurableItem.ico</Icon>
+    <TemplateID>92da22ae-a4f7-49c7-8094-13c5bf57a39d</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>ConfigurableItem</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$.cs" ReplaceParameters="true">ConfigurableItem.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="I$fileinputname$View.cs" ReplaceParameters="true">IConfigurableItemView.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="I$fileinputname$ViewModel.cs" ReplaceParameters="true">IConfigurableItemViewModel.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$ViewModel.cs" ReplaceParameters="true">ConfigurableItemViewModel.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$View.xaml.cs" ReplaceParameters="true">ConfigurableItemView.xaml.cs</ProjectItem>
+    <ProjectItem SubType="Designer" TargetFileName="$fileinputname.View.xaml" ReplaceParameters="true">ConfigurableItemView.xaml</ProjectItem>
+  </TemplateContent>
+  <WizardExtension>  
+    <Assembly>ClimaControl_ConfigurableItemWizard, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=af364ac3aebd2848</Assembly>  
+    <FullClassName>ClimaControl_ConfigurableItemWizard.ConfigurableItemWizard</FullClassName>  
+  </WizardExtension>
+</VSTemplate>

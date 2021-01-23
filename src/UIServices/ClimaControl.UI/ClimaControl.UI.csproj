@@ -11,7 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\Configuration\Views\" />
+    <Folder Include="Services\Configuration\ViewModels\" />
     <Folder Include="UICore\MVVM\" />
+    <Folder Include="UICore\ViewModels\Configuration\" />
+    <Folder Include="UICore\Views\Configuration\" />
   </ItemGroup>
 
   <ItemGroup>

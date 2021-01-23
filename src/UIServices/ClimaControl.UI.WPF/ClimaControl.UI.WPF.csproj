@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="DebugVM\" />
     <Folder Include="Resources\Images\" />
+    <Folder Include="Views\Configuration\" />
   </ItemGroup>
 
   <ItemGroup>
