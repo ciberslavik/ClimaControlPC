@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.FSRepositories
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimaControl.FSRepositories", "src\Repositories\ClimaControl.FSRepositories\ClimaControl.FSRepositories.csproj", "{0FFC1301-0474-4C4D-AB2C-DC0CC338324A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimaControl.Data.Tests", "src\Tests\ClimaControl.Data.Tests\ClimaControl.Data.Tests.csproj", "{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{0FFC1301-0474-4C4D-AB2C-DC0CC338324A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FFC1301-0474-4C4D-AB2C-DC0CC338324A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FFC1301-0474-4C4D-AB2C-DC0CC338324A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{6901D6B4-F330-41FF-82E6-52D5A179CC9C} = {FE63FF26-4319-41B5-8C5A-7DE432E1BB5A}
 		{511C1216-9A7C-4C6B-8851-5FEE1870679E} = {6901D6B4-F330-41FF-82E6-52D5A179CC9C}
 		{0FFC1301-0474-4C4D-AB2C-DC0CC338324A} = {494CB265-96B1-4EDB-B831-B6B78A62760D}
+		{7668B3A0-01F6-4D17-9B9D-7EE21ACA02EC} = {FE63FF26-4319-41B5-8C5A-7DE432E1BB5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50E587A7-5450-4F21-BE56-DD8CBBB4BA7C}

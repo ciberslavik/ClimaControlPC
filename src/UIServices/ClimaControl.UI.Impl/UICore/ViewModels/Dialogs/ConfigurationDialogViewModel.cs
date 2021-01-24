@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.ObjectModel;
 using ClimaControl.Data;
 using ClimaControl.Data.Configuration;
 using ClimaControl.UI.Services.Configuration;
@@ -16,10 +17,10 @@ namespace ClimaControl.UI.Impl.UICore.ViewModels.Dialogs
             _configurationService = configurationService;
         }
         public string Title { get; set; }
-        public ConfigItemBase SelectedItem { get; set; }
-        public ConfigItemBase RootConfiguration
+        public ConfigItem SelectedItem { get; set; }
+        public ObservableCollection<ConfigItem> Configurations
         {
-            get => _configurationService.GetRootConfig();
+            get => _configurationService.GetRootConfig().ChildItems;
         }
     }
 }

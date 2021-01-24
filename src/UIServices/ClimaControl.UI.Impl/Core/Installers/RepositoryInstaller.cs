@@ -1,6 +1,7 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using ClimaControl.Data.Configuration;
 using ClimaControl.FSRepositories;
 using ClimaControl.Security;
 using ClimaControl.Security.Repository.Debug;

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace ClimaControl.UI.Services.Configuration
+﻿namespace ClimaControl.Data.Configuration
 {
     public interface IConfigurationSerializer
     {

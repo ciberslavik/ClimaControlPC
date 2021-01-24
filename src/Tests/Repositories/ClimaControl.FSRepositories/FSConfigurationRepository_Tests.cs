@@ -1,98 +1,87 @@
 ﻿using System.IO;
 using ClimaControl.Data.Configuration;
+using ClimaControl.Data.Configuration.UICore;
+using ClimaControl.Data.Exceptions;
 using ClimaControl.FSRepositories;
 using ClimaControl.NewtonsoftJsonSerializers;
-using ClimaControl.UI.Services.Configuration;
 using NUnit.Framework;
 
-namespace ClimaControl.FSRepositories
+namespace ClimaControl.FSRepositoriesTests
 {
     public class FsConfigurationRepositoryTests
     {
         private const string _repoPath = @"C:\TestClimaRepo";
+        private IConfigurationSerializer serializer;
+        private FSConfigurationRepository repo;
+        private string testDirectoryName = "TestDirectory";
+        private string testSubDirectoryName = "SubDirectory";
+        [OneTimeSetUp]
+        public void InitEnvironment()
+        {
+            serializer = new JsonConfigurationSerializer();
+        }
 
         [SetUp]
         public void PrepareEnvironment()
         {
             if(Directory.Exists(_repoPath))
                 Directory.Delete(_repoPath,true);
+            repo = new FSConfigurationRepository(serializer, _repoPath);
+        }
 
+        [Test]
+        public void CreateConfigurationDirectoryInRoot_Test()
+        {
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
+
+            Assert.IsInstanceOf<ConfigurationDirectory>(directory,"Check return instance, Directory is not a instance of ConfigurationDirectory");
+            Assert.AreEqual(directory.Name, testDirectoryName, "Equal item name, Directory name are not equal");
+            Assert.IsTrue(Directory.Exists(expectedDirectoryPath),"Create directory, Directory cannot create in file system");
+        }
+
+        [Test]
+        public void CreateConfigurationDirectoryInRootAlreadyExistException_Test()
+        {
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
+
+            Assert.Throws<ConfigurationRepositoryException>((() => repo.CreateDirectory(testDirectoryName)));
         }
         [Test]
-        public void CreateDefaultItem()
+        public void CreateConfigurationSubDirectoryInDirectory_Test()
         {
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer,_repoPath);
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName + "\\" + testSubDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
 
-            var defaultConfiguration = repo.CreateConfig<DefaultConfigItem>();
+            var subDirectory = repo.CreateDirectory(testSubDirectoryName, directory);
 
-            Assert.IsTrue(File.Exists(_repoPath+@"\RootConfig\DefaultConfigItem.json"));
+            Assert.IsInstanceOf<ConfigurationDirectory>(subDirectory, "Directory is not a instance of ConfigurationDirectory");
+            Assert.AreEqual(subDirectory.Name, testSubDirectoryName, "Directory name are not equal");
+            Assert.IsTrue(Directory.Exists(expectedDirectoryPath), "Directory cannot create in file system");
+        }
+
+        [Test]
+        public void RemoveConfigurationDirectory_Test()
+        {
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
+
+            repo.RemoveDirectory(directory);
+
+            Assert.IsFalse(Directory.Exists(expectedDirectoryPath));
         }
         [Test]
-        public void CreateDefaultItemWithItemName()
+        public void RemoveConfigurationDirectoryInTree_Test()
         {
-            string itemName = "TestDefConfig";
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer, _repoPath);
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName + "\\" + testSubDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
+            var subDirectory = repo.CreateDirectory(testSubDirectoryName, directory);
 
-            var defaultConfiguration = repo.CreateConfig<DefaultConfigItem>(itemName);
+            repo.RemoveDirectory(subDirectory);
 
-            Assert.IsTrue(File.Exists(_repoPath + @"\RootConfig\"+itemName+".json"));
+            Assert.IsFalse(Directory.Exists(expectedDirectoryPath));
         }
-        [Test]
-        public void CreateCustomItem()
-        {
-            
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer, _repoPath);
 
-            var defaultConfiguration = repo.CreateConfig<ConfigItemTest>();
-
-            Assert.IsTrue(File.Exists(_repoPath + @"\RootConfig\ConfigItemTest.json"));
-        }
-        [Test]
-        public void CreateCustomItemWithItemName()
-        {
-            string itemName = "TestDefConfig";
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer, _repoPath);
-
-            var defaultConfiguration = repo.CreateConfig<ConfigItemTest>(itemName);
-
-            Assert.IsTrue(File.Exists(_repoPath + @"\RootConfig\" + itemName + ".json"));
-        }
-        [Test]
-        public void CreateCustomItemWithInstance()
-        {
-            string itemName = "TestDefConfig";
-           
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer, _repoPath);
-            ConfigItemTest testItem = new ConfigItemTest();
-            testItem.TestProperty1 = "sdfvsd";
-
-            var defaultConfiguration = repo.CreateConfig<ConfigItemTest>(itemName, testItem);
-
-            Assert.IsTrue(File.Exists(_repoPath + @"\RootConfig\" + itemName + ".json"));
-        }
-        [Test]
-        public void CreateCustomItemWithInstanceAndChildItem()
-        {
-            string itemName = "TestDefConfig";
-            
-            IConfigurationSerializer serializer = new JsonConfigurationSerializer();
-            IConfigurationRepository repo = new FSConfigurationRepository(serializer, _repoPath);
-
-            ConfigItemTest testItem = new ConfigItemTest();
-            testItem.TestProperty1 = "sdfvsd";
-
-            ConfigItemTest testItem2 = new ConfigItemTest();
-            testItem2.TestProperty1 = "TEST";
-            testItem.AddChild(testItem2);
-
-            var defaultConfiguration = repo.CreateConfig<ConfigItemTest>(itemName, testItem);
-
-            Assert.IsTrue(File.Exists(_repoPath + @"\RootConfig\" + itemName + ".json"));
-        }
     }
 }

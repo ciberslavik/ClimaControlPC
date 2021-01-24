@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json.Serialization;
 using ClimaControl.Data.Configuration;
-using ClimaControl.UI.Services.Configuration;
-using ClimaControl.UI.Services.Configuration.Model;
+using ClimaControl.Data.Configuration.UICore;
+using ClimaControl.Data.Exceptions;
 
 namespace ClimaControl.FSRepositories
 {
@@ -12,204 +13,260 @@ namespace ClimaControl.FSRepositories
     {
         private readonly IConfigurationSerializer _serializer;
         private readonly string _repoDir;
-        private RootConfigItem _rootConfig;
-
-        private Dictionary<string, string> _configRegistry; //Registry <ConfigPath, ConfigName>
+        private List<RegistryConfigurationItem> _configRegistry;
 
         public FSConfigurationRepository(IConfigurationSerializer serializer, string repoDirectory = "C:\\ClimaRepo")
         {
             _repoDir = repoDirectory;
             _serializer = serializer;
-            _configRegistry = new Dictionary<string, string>();
-            _rootConfig = new RootConfigItem("RootConfig");
+            _configRegistry = new List<RegistryConfigurationItem>();
+            
             if (!Directory.Exists(_repoDir))
             {
                 Directory.CreateDirectory(_repoDir);
             }
-            SaveConfigurationItem(_rootConfig);
-            
-        }
-        public IEnumerable<T> GetConfigsFromType<T>() where T : ConfigItemBase
-        {
-            throw new NotImplementedException();
         }
 
-        public IEnumerable<ConfigItemBase> GetConfigsFromName(string name)
+        public ConfigurationDirectory CreateDirectory(string directoryName, string header="")
         {
-            throw new NotImplementedException();
+            var directory = new ConfigurationDirectory(directoryName);
+
+            var directoryPath = _repoDir + "\\" + directoryName;
+
+            CreateFSDirectory(directoryPath);
+            _configRegistry.Add(new RegistryConfigurationItem(directoryName, header));
+            return directory;
         }
-
-        public ConfigItemBase GetConfigurationFromPath(string configPath)
+        private void CreateFSDirectory(string directoryPath)
         {
-            throw new NotImplementedException();
-        }
-
-        public RootConfigItem GetConfigurationRoot()
-        {
-            return _rootConfig;
-        }
-
-        public T CreateConfig<T>(ConfigItemBase parent = null) where T : ConfigItemBase, new()
-        {
-            T item = new T();
-            var itemName = typeof(T).Name;
-            return CreateConfig(itemName, item, parent);
-        }
-
-        public T CreateConfig<T>(string configurationName, ConfigItemBase parent = null) where T : ConfigItemBase, new()
-        {
-            T item = new T();
-            return CreateConfig<T>(configurationName, item, parent);
-        }
-
-        public T CreateConfig<T>(string configurationName, T instance, ConfigItemBase parent = null) where T : ConfigItemBase, new()
-        {
-            instance.ItemName = configurationName;
-            if(parent==null)
-                _rootConfig.AddChild(instance);
-            else
-                parent.AddChild(instance);
-
-            NormalizeName(_rootConfig);
-
-            SaveConfigurationItem(instance);
-
-            IndexDirectory(_repoDir);
-            return instance;
-        }
-
-        
-        
-        public void UpdateConfig<T>(T config)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void SaveConfigurationItem(ConfigItemBase item)
-        {
-            string itemDirectoryPath;
-            string itemFilePath;
-
-            
-            itemDirectoryPath = _repoDir + item.GetPath();
-            string itemLocationPath = Path.GetDirectoryName(itemDirectoryPath);
-
-            if (!Directory.Exists(itemLocationPath))
-                Directory.CreateDirectory(itemLocationPath);
-
-            itemFilePath = itemDirectoryPath + ".json";
-            
-            SaveConfigItem(itemFilePath,item);
-
-            if (item.HasChildItems())
+            if (Path.IsPathFullyQualified(directoryPath))
             {
-                if (!Directory.Exists(itemDirectoryPath))
-                    Directory.CreateDirectory(itemDirectoryPath);
-
-                foreach (var childItem in item.ChildItems)
+                if (!Directory.Exists(directoryPath))
                 {
-                    SaveConfigurationItem(childItem);
+                    Directory.CreateDirectory(directoryPath);
                 }
+                else
+                    throw new ConfigurationRepositoryException($"Directory: {directoryPath} \r\nAlready exist.");
             }
         }
-
-        private void LoadConfigurationRepository()
+        public ConfigurationDirectory CreateDirectory(string directoryName, ConfigurationDirectory parent)
         {
-            if(Directory.Exists(_repoDir))
-            {
-                //foreach (var VARIABLE in Dire)
-                //{
-                    
-                //}
-            }
+            var directory = new ConfigurationDirectory(directoryName);
+            
+            var directoryPath = _repoDir + parent.GetPath() + "\\" + directoryName;
+            CreateFSDirectory(directoryPath);
+            parent.AddChildItem(directory);
+            return directory;
         }
-        private void IndexDirectory(string directoryPath)
-        {
-            _configRegistry.Clear();
-            ConfigItemBase testRegistry = new RootConfigItem("RootConfig");
 
-            testRegistry = IndexDirectoryRecursive(testRegistry);
-        }
-        private ConfigItemBase IndexDirectoryRecursive(ConfigItemBase item)
+        public void RemoveDirectory(ConfigurationDirectory configurationDirectory)
         {
-            //ConfigItemBase currentItem = item;
-            string itemDirectoryPath = _repoDir + item.GetPath();
-            string itemFilePath = itemDirectoryPath + ".json";
-
-            if (File.Exists(itemFilePath))
+            var directoryPath = _repoDir + configurationDirectory.GetPath();
+            var directoryName = configurationDirectory.Name;
+            if (Directory.Exists(directoryPath))
             {
-                item = LoadConfigItem(itemFilePath);
-
-                if (Directory.Exists(itemDirectoryPath))    //Has child
+                Directory.Delete(directoryPath,true);
+                if (configurationDirectory.Parent != null)
                 {
-                    foreach (var childFile in Directory.GetFiles(itemDirectoryPath)) //enumerate child files
+                    configurationDirectory.RemoveChildItem(directoryName);
+                }
+                else
+                {
+                    var registryItem = _configRegistry.FirstOrDefault(e => e.Name == directoryName);
+                    if (registryItem != null)
                     {
-                        var childName = Path.GetFileNameWithoutExtension(childFile);
-                        ConfigItemBase childItem = new DefaultConfigItem();
-                        childItem.ItemName = childName;
-                        item.AddChild(childItem);
-                        childItem = IndexDirectoryRecursive(childItem);
+                        _configRegistry.Remove(registryItem);
                     }
                 }
             }
-
-            return item;
-        }
-        private void LoadConfigurationItem(ref ConfigItemBase item)
-        {
-            string itemDirectoryPath;
-            string itemFilePath;
-
-
-            itemDirectoryPath = _repoDir + item.GetPath();
-            string itemLocationPath = Path.GetDirectoryName(itemDirectoryPath);
-            
-            itemFilePath = itemDirectoryPath + ".json";
-            if (File.Exists(itemFilePath))
-            {
-                item = LoadConfigItem(itemFilePath);
-            }
-
-            if (Directory.Exists(itemDirectoryPath))
-            {
-
-            }
         }
 
-        private void NormalizeName(ConfigItemBase item)
-        {
-            
-            if (string.IsNullOrEmpty(item.ItemName))
-            {
-                item.ItemName = item.GetType().Name;
-            }
+        //public T RegisterConfig<T>(string configName="") where T:ConfigItem, new()
+        //{
+        //    T config = new T();
+        //    var configRegistryItem = new RegistryItem();
+        //    if (configName == String.Empty)
+        //    {
+        //        configRegistryItem.Name = typeof(T).Name;
+        //    }
+        //    else
+        //    {
+        //        configRegistryItem.Name = configName;
+        //    }
 
-            if (item.HasChildItems())
-            {
-                foreach (var childItem in item.ChildItems)
-                {
-                    NormalizeName(childItem);
-                }
-            }
-        }
-        private void SaveConfigItem(string filePath, ConfigItemBase item)
-        {
-            using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.OpenOrCreate)))
-            {
-                writer.Write(_serializer.Serialize(item));
-            }
-        }
+        //    configRegistryItem.ConfigType = typeof(T);
 
-        private ConfigItemBase LoadConfigItem(string filePath)
+
+        //    return config;
+        //}
+        //public IEnumerable<T> GetConfigsFromType<T>() where T : ConfigItem
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public IEnumerable<ConfigItem> GetConfigsFromName(string name)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public ConfigItem GetConfigurationFromPath(string configPath)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public ConfigItem GetConfigurationRoot()
+        //{
+        //    return _rootConfig;
+        //}
+
+        //public T CreateConfig<T>(ConfigItem parent = null) where T : ConfigItem, new()
+        //{
+        //    T item = new T();
+        //    var itemName = typeof(T).Name;
+        //    return CreateConfig(itemName, item, parent);
+        //}
+
+        //public T CreateConfig<T>(string configurationName, ConfigItem parent = null) where T : ConfigItem, new()
+        //{
+        //    T item = new T();
+        //    return CreateConfig<T>(configurationName, item, parent);
+        //}
+
+        //public T CreateConfig<T>(string configurationName, T instance, ConfigItem parent = null) where T : ConfigItem, new()
+        //{
+        //    instance.ItemName = configurationName;
+        //    if(parent==null)
+        //        _rootConfig.AddChild(instance);
+        //    else
+        //        parent.AddChild(instance);
+
+        //    NormalizeName(_rootConfig);
+
+        //    SaveConfigurationItem(instance);
+
+        //    IndexDirectory();
+        //    return instance;
+        //}
+
+
+
+        //    public void UpdateConfig<T>(T config)
+        //    {
+        //        throw new System.NotImplementedException();
+        //    }
+
+        //    private void SaveConfigurationItem(ConfigItem item)
+        //    {
+        //        string itemDirectoryPath;
+        //        string itemFilePath;
+
+
+        //        itemDirectoryPath = _repoDir + item.GetPath();
+        //        string itemLocationPath = Path.GetDirectoryName(itemDirectoryPath);
+
+        //        if (!Directory.Exists(itemLocationPath))
+        //            Directory.CreateDirectory(itemLocationPath);
+
+        //        itemFilePath = itemDirectoryPath + ".json";
+
+        //        SaveConfigItem(itemFilePath,item);
+
+        //        if (item.HasChildItems())
+        //        {
+        //            if (!Directory.Exists(itemDirectoryPath))
+        //                Directory.CreateDirectory(itemDirectoryPath);
+
+        //            foreach (var childItem in item.ChildItems)
+        //            {
+        //                SaveConfigurationItem(childItem);
+        //            }
+        //        }
+        //    }
+
+        //    private void LoadConfigurationRepository()
+        //    {
+        //        if(Directory.Exists(_repoDir))
+        //        {
+        //            //foreach (var VARIABLE in Dire)
+        //            //{
+
+        //            //}
+        //        }
+        //    }
+
+        //    private string RootPath
+        //    {
+        //        get { return _repoDir + _rootConfig.GetPath(); }
+        //    }
+        //    private void IndexDirectory()
+        //    {
+        //        ConfigItem testRegistry = new ConfigItem();
+        //        testRegistry.ItemName = _rootConfig.ItemName;
+
+        //        string fileName = RootPath + ".json";
+        //        if (File.Exists(fileName))
+        //        {
+        //            testRegistry = LoadConfigItem(fileName);
+        //            string dirPath = RootPath;
+        //            IndexDirectoryRecursive(testRegistry, dirPath);
+        //        }
+
+        //        _rootConfig = testRegistry;
+        //    }
+        //    private void IndexDirectoryRecursive(ConfigItem parent, string path)
+        //    {
+        //        if (Directory.Exists(path))
+        //        {
+        //            foreach (var file in Directory.GetFiles(path))
+        //            {
+        //                ConfigItem item;
+        //                item = _serializer.Deserialize<ConfigItem>(File.ReadAllBytes(file));
+        //                parent.AddChild(item);
+
+        //                string itemDir = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file));
+        //                IndexDirectoryRecursive(item,itemDir);
+        //            }
+        //        }
+        //    }
+
+        //    private void NormalizeName(ConfigItem item)
+        //    {
+
+        //        if (string.IsNullOrEmpty(item.ItemName))
+        //        {
+        //            item.ItemName = item.GetType().Name;
+        //        }
+
+        //        if (item.HasChildItems())
+        //        {
+        //            foreach (var childItem in item.ChildItems)
+        //            {
+        //                NormalizeName(childItem);
+        //            }
+        //        }
+        //    }
+        //    private void SaveConfigItem(string filePath, ConfigItem item)
+        //    {
+        //        using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.OpenOrCreate)))
+        //        {
+        //            writer.Write(_serializer.Serialize(item));
+        //        }
+        //    }
+
+        //    private ConfigItem LoadConfigItem(string filePath)
+        //    {
+        //        if (File.Exists(filePath))
+        //        {
+        //            return _serializer.Deserialize<ConfigItem>(File.ReadAllBytes(filePath));
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        public RegistryConfigurationItem GetConfigurationRegistry()
         {
-            if (File.Exists(filePath))
-            {
-                return _serializer.Deserialize<DefaultConfigItem>(File.ReadAllBytes(filePath));
-            }
-            else
-            {
-                return null;
-            }
+            throw new NotImplementedException();
         }
     }
 }

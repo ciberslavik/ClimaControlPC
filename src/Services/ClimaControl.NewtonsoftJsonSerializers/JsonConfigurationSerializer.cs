@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Text;
-using ClimaControl.UI.Services.Configuration;
+using ClimaControl.Data.Configuration;
 using Newtonsoft.Json;
 
 namespace ClimaControl.NewtonsoftJsonSerializers

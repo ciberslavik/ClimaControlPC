@@ -12,6 +12,6 @@ namespace ClimaControl.UI.Impl.UICore.Dialogs
         {
         }
 
-        public ConfigItemBase SelectedItem { get; set; }
+        public ConfigItem SelectedItem { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using ClimaControl.Data.Configuration;
 using ClimaControl.NewtonsoftJsonSerializers;
 using ClimaControl.Security;
 using ClimaControl.UI.Impl.Core.Services.Configuration;

@@ -131,7 +131,7 @@ namespace ObjectGenerator.ItemGenerators
             CodeTypeDeclaration targetClass = new CodeTypeDeclaration(_newItemName);
             targetClass.IsClass = true;
             targetClass.TypeAttributes = TypeAttributes.Public;
-            targetClass.BaseTypes.Add(new CodeTypeReference(new CodeTypeParameter("ConfigItemBase")));
+            targetClass.BaseTypes.Add(new CodeTypeReference(new CodeTypeParameter("ConfigItem")));
 
             foreach (var property in _properties)
             {

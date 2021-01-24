@@ -125,6 +125,7 @@
     </Style>
     <Style TargetType="TreeView">
         <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
     </Style>
     <Style TargetType="GridSplitter">
         <Setter Property="Background" Value="{DynamicResource DialogBackgroundBrush}"></Setter>

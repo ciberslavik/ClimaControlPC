@@ -2,7 +2,7 @@
 
 namespace ClimaControl.UI.Services.Configuration.Model
 {
-    public class TestConfigItem:ConfigItemBase
+    public class TestConfigItem:ConfigItem
     {
         public TestConfigItem():base("Defaault")
         {

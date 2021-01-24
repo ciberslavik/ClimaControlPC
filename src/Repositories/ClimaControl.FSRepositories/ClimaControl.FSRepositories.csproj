@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\UIServices\ClimaControl.UI\ClimaControl.UI.csproj" />
+    <ProjectReference Include="..\..\ClimaControl.Data\ClimaControl.Data.csproj" />
   </ItemGroup>
 
 </Project>

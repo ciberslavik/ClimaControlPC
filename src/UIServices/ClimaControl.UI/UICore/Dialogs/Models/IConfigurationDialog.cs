@@ -5,6 +5,6 @@ namespace ClimaControl.UI.UICore.Dialogs.Models
 {
     public interface IConfigurationDialog : IDialog
     {
-        ConfigItemBase SelectedItem { get; set; }
+        ConfigItem SelectedItem { get; set; }
     }
 }
