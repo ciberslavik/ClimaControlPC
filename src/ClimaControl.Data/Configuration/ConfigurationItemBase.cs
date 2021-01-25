@@ -26,6 +26,13 @@ namespace ClimaControl.Data.Configuration
             _childConfigs=new Dictionary<string, ConfigurationItemBase>();
             _parent = null;
         }
+        protected ConfigurationItemBase(ConfigurationItemBase item)
+        {
+            _name = item.Name;
+            _header = item.Header;
+            _childConfigs = new Dictionary<string, ConfigurationItemBase>(item.Child);
+            _parent = item.Parent;
+        }
         public virtual IDictionary<string,ConfigurationItemBase> Child => _childConfigs;
         [DataMember]
         public string Name

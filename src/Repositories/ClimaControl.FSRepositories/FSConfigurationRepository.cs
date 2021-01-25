@@ -56,6 +56,7 @@ namespace ClimaControl.FSRepositories
             var directoryPath = _repoDir + parent.GetPath() + "\\" + directoryName;
             CreateFSDirectory(directoryPath);
             parent.AddChildItem(directory);
+
             return directory;
         }
 
@@ -267,6 +268,32 @@ namespace ClimaControl.FSRepositories
         public RegistryConfigurationItem GetConfigurationRegistry()
         {
             throw new NotImplementedException();
+        }
+
+        public List<ConfigurationDirectory> GetDirectories(string directoryName)
+        {
+            var list = new List<ConfigurationDirectory>();
+            if(_configRegistry.Count>0)
+            { 
+                foreach (var directoryPath in Directory.GetDirectories(_repoDir))
+                {
+                    var dirName = Path.GetDirectoryName(directoryPath);
+                }
+            }
+            return list;
+        }
+
+        private void BuildDirectoriesList(List<ConfigurationDirectory> list, ConfigurationItemBase parent,
+            string directoryName)
+        {
+            foreach (var childKey in parent.Child.Keys)
+            {
+                if (childKey.Equals(directoryName))
+                {
+                    list.Add(new ConfigurationDirectory(parent.Child[childKey]));
+                }
+                BuildDirectoriesList(list, parent.Child[childKey], directoryName);
+            }
         }
     }
 }
