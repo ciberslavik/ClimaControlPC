@@ -13,5 +13,9 @@ namespace ClimaControl.Data.Configuration.UICore
         {
 
         }
+        public ConfigurationDirectory(ConfigurationItemBase item):base(item)
+        {
+
+        }
     }
 }

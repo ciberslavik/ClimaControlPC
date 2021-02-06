@@ -83,5 +83,20 @@ namespace ClimaControl.FSRepositoriesTests
             Assert.IsFalse(Directory.Exists(expectedDirectoryPath));
         }
 
+        [Test]
+        public void GetConfigurationDirectoies_Test()
+        {
+            var expectedDirectoryPath = _repoPath + "\\" + testDirectoryName + "\\" + testSubDirectoryName;
+            var directory = repo.CreateDirectory(testDirectoryName);
+            var directory2 = repo.CreateDirectory(testDirectoryName + "2");
+            var subDirectory = repo.CreateDirectory(testSubDirectoryName, directory);
+            var subSubDirectory = repo.CreateDirectory(testSubDirectoryName, subDirectory);
+            var subDirectory2 = repo.CreateDirectory(testSubDirectoryName, directory2);
+
+            var directories = repo.GetDirectories(testSubDirectoryName);
+
+            Assert.NotNull(directories, "Return null directory list");
+            Assert.IsTrue(directories.Count == 3,"Not find all entries");
+        }
     }
 }

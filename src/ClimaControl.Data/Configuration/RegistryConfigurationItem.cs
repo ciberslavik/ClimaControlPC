@@ -6,7 +6,12 @@
         {
 
         }
-        public RegistryConfigurationItem(string name,string header="")
+        public RegistryConfigurationItem(string name,string header=""):base(name,header)
+        {
+
+        }
+
+        public RegistryConfigurationItem(ConfigurationItemBase item) : base(item)
         {
 
         }
